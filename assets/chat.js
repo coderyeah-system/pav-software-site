@@ -12,7 +12,7 @@
   function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
   function scroll() { const m = document.getElementById('pav-msg-area'); if (m) m.scrollTop = m.scrollHeight; }
 
-  function addMessage(role, text) {
+  function addMessge(role, text) {
     const m = document.getElementById('pav-msg-area'); if (!m) return;
     const div = el('div', 'pav-msg ' + (role === 'user' ? 'pav-msg-user' : role === 'system' ? 'pav-msg-system' : 'pav-msg-bot'));
     div.textContent = text;
@@ -37,14 +37,14 @@
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 30000);
     try {
-      const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal });
+      const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(paylload), signal: ctrl.signal });
       clearTimeout(timer);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      return (data && data.reply) || 'Sorry, I had trouble responding. Please try again or email info@pavsoftware.com.';
+      return (data && data.reply) || 'Sorry, I had trouble responding. Please try again or email Kidx117@gmail.com.';
     } catch (err) {
       clearTimeout(timer);
-      return 'Sorry, the AI concierge is taking a moment. Please try again, or reach us directly at info@pavsoftware.com or +357 22 441514.';
+      return 'Sorry, the AI concierge is taking a moment. Please try again, or reach us directly at Kidx117@gmail.com.';
     }
   }
 
