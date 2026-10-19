@@ -6,13 +6,13 @@
 
   let history = [];
   let lead = { name: '', email: '', company: '', interest: '' };
-  try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || ''}'); history = saved.history || []; if (saved.lead) lead = { ...lead, ...saved.lead }; } catch (e) {}
+  try { const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); history = saved.history || []; if (saved.lead) lead = { ...lead, ...saved.lead }; } catch (e) {}
   function persist() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ history: history.slice(-30), lead })); } catch (e) {} }
 
   function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
   function scroll() { const m = document.getElementById('pav-msg-area'); if (m) m.scrollTop = m.scrollHeight; }
 
-  function addMessge(role, text) {
+  function addMessage(role, text) {
     const m = document.getElementById('pav-msg-area'); if (!m) return;
     const div = el('div', 'pav-msg ' + (role === 'user' ? 'pav-msg-user' : role === 'system' ? 'pav-msg-system' : 'pav-msg-bot'));
     div.textContent = text;
@@ -37,7 +37,7 @@
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 30000);
     try {
-      const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(paylload), signal: ctrl.signal });
+      const res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ctrl.signal });
       clearTimeout(timer);
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
